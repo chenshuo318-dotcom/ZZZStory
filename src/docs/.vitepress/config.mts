@@ -216,6 +216,15 @@ export default defineConfig({
           ],
         },
         {
+          text: "第1章",
+          items: [
+            {
+              text: "幕间",
+              link: "/main-line/chapter1/Interlude",
+            },
+          ],
+        },
+        {
           text: "返回索引",
           link: "/started",
         },
