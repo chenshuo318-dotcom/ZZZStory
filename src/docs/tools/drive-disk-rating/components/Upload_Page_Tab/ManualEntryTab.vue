@@ -1,71 +1,74 @@
 <template>
-  <transition name="fade">
-    <div class="manual-entry">
-      <!-- 角色选择 -->
-      <CharacterSelector
-        v-model="currentCharacterName"
-        @change="handleCharacterChange"
-      />
+  <div class="p-5 mb-5">
+    <!-- 角色选择 -->
+    <CharacterSelector
+      v-model="currentCharacterName"
+      @change="handleCharacterChange"
+    />
 
-      <!-- 驱动盘配置区 -->
-      <div class="rounded-lg">
-        <div class="text-lg font-semibold my-2 text-black dark:text-gray-200">
-          驱动盘配置 (理论满分权重{{ maxPossibleWeight.toFixed(1) }})
-        </div>
-
-        <!-- 驱动盘网格 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <DriveCard
-            v-for="slotId in slots"
-            :key="slotId"
-            :slot-id="slotId"
-            :data="driveData[slotId]"
-            :character="currentCharacter"
-            @update:basic="handleUpdateBasic"
-            @update:mainStat="handleUpdateMainStat"
-            @update:subStat="handleUpdateSubStat"
-          />
-        </div>
-
-        <!-- 操作按钮 -->
-        <div class="flex justify-center gap-5 mt-5">
-          <button
-            @click="calculateScore"
-            class="px-8! py-2.5! border-none rounded text-sm font-semibold cursor-pointer bg-(--main-color-1)! hover:bg-(--main-color-2)! text-white! dark:text-black! transition-colors"
-          >
-            计算评分
-          </button>
-          <button
-            @click="resetAll"
-            class="px-8! py-2.5! border-none rounded text-sm font-semibold cursor-pointer hover:bg-gray-200! dark:bg-[#2d2d30] dark:hover:bg-gray-800! dark:text-gray-300 transition-colors"
-          >
-            重置所有
-          </button>
-        </div>
+    <!-- 驱动盘配置区 -->
+    <div class="rounded-lg">
+      <div class="text-lg font-semibold my-2 text-black dark:text-gray-200">
+        驱动盘配置 (理论满分权重{{ maxPossibleWeight.toFixed(1) }})
       </div>
 
-      <!-- 结果面板 -->
-      <div
-        class="text-lg font-semibold my-2 text-black dark:text-gray-200"
-        v-if="showResult"
-      >
-        评分结果
+      <!-- 驱动盘网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <DriveCard
+          v-for="slotId in slots"
+          :key="slotId"
+          :slot-id="slotId"
+          :data="driveData[slotId]"
+          :character="currentCharacter"
+          @update:basic="handleUpdateBasic"
+          @update:mainStat="handleUpdateMainStat"
+          @update:subStat="handleUpdateSubStat"
+        />
       </div>
-      <ResultPanel
-        :visible="showResult"
-        :score-result="scoreResult"
-        :max-weight="maxPossibleWeight"
-        ref="results"
-      />
 
-      <!-- 切换提示 -->
-      <div class="switch-hint">
-        <button @click="$emit('switch-mode', 'auto-new')" class="switch-btn">
-          🚀 填累了？试试自动提取
+      <!-- 操作按钮 -->
+      <div class="flex justify-center gap-5 mt-5">
+        <button
+          @click="calculateScore"
+          class="px-8! py-2.5! border-none rounded text-sm font-semibold cursor-pointer bg-(--main-color-1)! hover:bg-(--main-color-2)! text-white! dark:text-black! transition-colors"
+        >
+          计算评分
+        </button>
+        <button
+          @click="resetAll"
+          class="px-8! py-2.5! border-none rounded text-sm font-semibold cursor-pointer hover:bg-gray-200! dark:bg-[#2d2d30] dark:hover:bg-gray-800! dark:text-gray-300 transition-colors"
+        >
+          重置所有
         </button>
       </div>
     </div>
-  </transition>
+
+    <!-- 结果面板 -->
+    <div
+      class="text-lg font-semibold my-2 text-black dark:text-gray-200"
+      v-if="showResult"
+    >
+      评分结果
+    </div>
+    <ResultPanel
+      :visible="showResult"
+      :score-result="scoreResult"
+      :max-weight="maxPossibleWeight"
+      ref="results"
+    />
+
+    <!-- 切换提示 -->
+    <div
+      class="text-center border-t-(--vp-c-divider) mt-[30px] pt-5 border-t border-solid"
+    >
+      <button
+        @click="$emit('switch-mode', 'auto-new')"
+        class="text-(--vp-c-text-1) cursor-pointer text-sm px-4 py-2 hover:text-(--main-color-1)! transition-colors"
+      >
+        填累了？试试自动提取
+      </button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +76,11 @@ import { ref, computed, nextTick } from "vue";
 import CharacterSelector from "../CharacterSelector.vue";
 import DriveCard from "../DriveCard.vue";
 import ResultPanel from "../ResultPanel.vue";
-import { getCharacterHighlightSubStats, getMainStatOptions, buildCharacterConfigs } from "../ManualEntryTab_Method_Library.ts";
+import {
+  getCharacterHighlightSubStats,
+  getMainStatOptions,
+  buildCharacterConfigs,
+} from "../ManualEntryTab_Method_Library.ts";
 import { QUALITY_WEIGHTS } from "zzz-drive-disk-rating";
 
 // 定义类型
@@ -431,34 +438,6 @@ const resetAll = () => {
 </script>
 
 <style scoped>
-.manual-entry {
-  padding: 20px 0;
-}
-
-.switch-hint {
-  margin-top: 30px;
-  text-align: center;
-  padding-top: 20px;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.switch-btn {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.switch-btn:hover {
-  background: var(--vp-c-divider);
-  border-color: var(--main-color-1);
-  color: var(--main-color-1);
-}
-
 .grade-sssp {
   color: #00eeff;
   text-shadow: 0 0 10px rgba(107, 220, 255, 0.5);

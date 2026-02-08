@@ -29,7 +29,12 @@
         @change="handleUpdate('level', $event)"
         class="p-2! rounded dark:text-gray-200! text-sm border! border-gray-300! dark:border-gray-600! w-full appearance-auto!"
       >
-        <option v-for="i in 16" :key="i - 1" :value="i - 1" class="dark:text-black">
+        <option
+          v-for="i in 16"
+          :key="i - 1"
+          :value="i - 1"
+          class="dark:text-black"
+        >
           {{ i - 1 }}级
         </option>
       </select>
@@ -45,8 +50,8 @@
     </div>
 
     <!-- 主词条 -->
-    <div class="mb-4  rounded">
-      <span class="block text-xs  dark:text-gray-400 mb-1.5">
+    <div class="mb-4 rounded">
+      <span class="block text-xs dark:text-gray-400 mb-1.5">
         {{ isFixedSlot ? "主词条 (固定)" : "主词条 (选择)" }}
       </span>
 
@@ -62,10 +67,17 @@
         <select
           :value="data.mainStat"
           @change="handleMainStatChange"
-          class="p-2! rounded dark:text-gray-200! text-sm border! border-gray-300! dark:border-gray-600! w-full appearance-auto! "
+          class="p-2! rounded dark:text-gray-200! text-sm border! border-gray-300! dark:border-gray-600! w-full appearance-auto!"
         >
-          <option value="" class="dark:text-black text-gray-400!">请选择主词条</option>
-          <option v-for="stat in mainStatOptions" :key="stat" :value="stat" class="dark:text-black">
+          <option value="" class="dark:text-black text-gray-400!">
+            请选择主词条
+          </option>
+          <option
+            v-for="stat in mainStatOptions"
+            :key="stat"
+            :value="stat"
+            class="dark:text-black"
+          >
             {{ stat }}
           </option>
         </select>
@@ -79,9 +91,14 @@
           <select
             :value="data.element"
             @change="handleUpdate('element', $event)"
-            class="p-2! rounded dark:text-gray-200! text-sm border! border-gray-300! dark:border-gray-600! w-full appearance-auto! "
+            class="p-2! rounded dark:text-gray-200! text-sm border! border-gray-300! dark:border-gray-600! w-full appearance-auto!"
           >
-            <option v-for="el in ELEMENTS" :key="el" :value="el" class="dark:text-black">
+            <option
+              v-for="el in ELEMENTS"
+              :key="el"
+              :value="el"
+              class="dark:text-black"
+            >
               {{ el }}
             </option>
           </select>
@@ -122,7 +139,10 @@
 import { computed } from "vue";
 import SubStatRow from "./SubStatRow.vue";
 import { SLOT_MAIN_POOLS } from "zzz-drive-disk-rating";
-import { ELEMENTS, getMainStatOptions } from "./ManualEntryTab_Method_Library.ts";
+import {
+  ELEMENTS,
+  getMainStatOptions,
+} from "./ManualEntryTab_Method_Library.ts";
 
 // 工具函数
 const getMaxUpgradesForLevel = (level: number) => {

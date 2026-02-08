@@ -29,7 +29,10 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { buildCharacterConfigs, CharacterConfig } from "./ManualEntryTab_Method_Library.ts";
+import {
+  buildCharacterConfigs,
+  CharacterConfig,
+} from "./ManualEntryTab_Method_Library.ts";
 
 // 构建角色配置对象
 const configs = buildCharacterConfigs();
